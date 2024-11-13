@@ -111,7 +111,7 @@ private fun DrawerContent(
                 coroutineScope.launch { drawerState.close() }
             }) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_menu_barber),
+                painter = painterResource(id = R.drawable.ic_login),
                 contentDescription = "Login",
                 modifier = Modifier.size(30.dp),
                 tint = getColorTexto(ehLogin)

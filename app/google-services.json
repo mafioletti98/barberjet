@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "57316033381",
+    "project_id": "barberjet-551c1",
+    "storage_bucket": "barberjet-551c1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57316033381:android:22a29a8a44e31b270c578c",
+        "android_client_info": {
+          "package_name": "br.edu.up.barberjet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF1WU1SMbk6YBo-dx4FG13PliPnl3cnQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

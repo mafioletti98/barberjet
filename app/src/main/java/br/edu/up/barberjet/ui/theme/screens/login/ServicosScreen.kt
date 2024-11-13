@@ -42,7 +42,7 @@ fun TelaServicos(drawerState: DrawerState) {
                 BoxService(
                     serviceName = "Corte de Cabelo",
                     serviceDescription = "Corte moderno e estiloso para todos os tipos de cabelo.",
-                    imageResource = R.drawable.ic_servico_corte
+                    imageResource = R.drawable.ic_corte
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -50,7 +50,7 @@ fun TelaServicos(drawerState: DrawerState) {
                 BoxService(
                     serviceName = "Barba",
                     serviceDescription = "Aparação e modelagem de barba com produtos de qualidade.",
-                    imageResource = R.drawable.ic_servico_barba
+                    imageResource = R.drawable.ic_barba
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -58,7 +58,7 @@ fun TelaServicos(drawerState: DrawerState) {
                 BoxService(
                     serviceName = "Tintura",
                     serviceDescription = "Tintura profissional para um visual renovado.",
-                    imageResource = R.drawable.ic_servico_tintura
+                    imageResource = R.drawable.ic_tintura
                 )
             }
         }
