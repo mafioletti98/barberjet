@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import br.edu.up.barberjet.R
 import br.edu.up.barberjet.ui.theme.screens.BarberTopBar
 import br.edu.up.barberjet.ui.theme.themes.Amarelo
-import br.edu.up.barberjet.ui.theme.themes.Preto
 
 @Composable
 fun TelaServicos(drawerState: DrawerState) {

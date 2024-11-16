@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 
 
 object LoginRotas {
@@ -16,7 +17,7 @@ object LoginRotas {
 }
 
 @Composable
-fun LoginNavHost(drawerState: DrawerState) {
+fun LoginNavHost(drawerState: DrawerState, viewModel: AgendamentoViewModel) {
     val navCtrlBottomNav = rememberNavController()
     NavHost(
         navController = navCtrlBottomNav,
@@ -29,7 +30,7 @@ fun LoginNavHost(drawerState: DrawerState) {
             TelaRegistro(drawerState = drawerState)
         }
         composable(LoginRotas.TELA_AGENDAMENTO_ROUTE) {
-            TelaDeAgendamento(drawerState = drawerState)
+            TelaDeAgendamento(drawerState = drawerState,  viewModel)
         }
         composable(LoginRotas.TELA_SERVICOS_ROUTE) {
             TelaServicos(drawerState = drawerState)

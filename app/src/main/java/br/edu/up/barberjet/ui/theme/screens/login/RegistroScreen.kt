@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.edu.up.barberjet.BarberRotas
 import br.edu.up.barberjet.ui.theme.screens.BarberTopBar
 import br.edu.up.barberjet.ui.theme.themes.Amarelo
 import br.edu.up.barberjet.ui.theme.themes.Preto

@@ -17,12 +17,14 @@ import br.edu.up.barberjet.ui.theme.screens.BarberTopBar
 import br.edu.up.barberjet.ui.theme.themes.Amarelo
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import br.edu.up.barberjet.model.schedule.Agendamento
 import br.edu.up.barberjet.ui.theme.themes.DarkGrey
+import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaDeAgendamento(drawerState: DrawerState) {
+fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel) {
     val context = LocalContext.current
 
     var selectedDate by remember { mutableStateOf("Selecione a Data") }
@@ -96,7 +98,14 @@ fun TelaDeAgendamento(drawerState: DrawerState) {
                 ) {
                     Box(modifier = Modifier.weight(1f).padding(8.dp)) {
                         Button(
-                            onClick = {  },
+                            onClick = {
+                                val agendamento = Agendamento()
+                                agendamento.date = selectedDate
+                                agendamento.horaMin = selectedTime
+
+                                viewModel.gravar(agendamento)
+
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = Amarelo)
                         ) {
                             Text(text = "Confirmar", color = Color.Black)

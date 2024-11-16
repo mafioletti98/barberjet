@@ -37,6 +37,7 @@ import br.edu.up.barberjet.ui.theme.screens.login.TelaRegistro
 import br.edu.up.barberjet.ui.theme.screens.login.TelaServicos
 import br.edu.up.barberjet.ui.theme.themes.DarkGrey
 import br.edu.up.barberjet.ui.theme.themes.YellowLouco
+import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 import kotlinx.coroutines.launch
 
 object BarberRotas {
@@ -46,11 +47,8 @@ object BarberRotas {
     const val TELA_SERVICOS = "tela_servicos"
 }
 
-@Preview(
-    device = Devices.PIXEL
-)
 @Composable
-fun BarberNavDrawer() {
+fun BarberNavDrawer(viewModel: AgendamentoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navCtrlDrawer = rememberNavController()
 
@@ -65,13 +63,13 @@ fun BarberNavDrawer() {
                 startDestination = BarberRotas.TELA_LOGIN
             ) {
                 composable(BarberRotas.TELA_LOGIN) {
-                    LoginNavHost(drawerState)
+                    LoginNavHost(drawerState, viewModel)
                 }
                 composable(BarberRotas.TELA_CADASTRO) {
                     TelaRegistro(drawerState)
                 }
                 composable(BarberRotas.TELA_AGENDAMENTO) {
-                    TelaDeAgendamento(drawerState)
+                    TelaDeAgendamento(drawerState, viewModel)
                 }
                 composable(BarberRotas.TELA_SERVICOS) {
                     TelaServicos(drawerState)
