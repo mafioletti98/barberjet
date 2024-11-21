@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -22,8 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -33,10 +29,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.edu.up.barberjet.ui.theme.screens.login.LoginNavHost
 import br.edu.up.barberjet.ui.theme.screens.login.TelaDeAgendamento
+import br.edu.up.barberjet.ui.theme.screens.login.TelaListaAgendamentos
 import br.edu.up.barberjet.ui.theme.screens.login.TelaRegistro
 import br.edu.up.barberjet.ui.theme.screens.login.TelaServicos
-import br.edu.up.barberjet.ui.theme.themes.DarkGrey
-import br.edu.up.barberjet.ui.theme.themes.YellowLouco
 import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 import kotlinx.coroutines.launch
 
@@ -45,21 +40,22 @@ object BarberRotas {
     const val TELA_CADASTRO = "tela_cadastro"
     const val TELA_AGENDAMENTO = "tela_agendamento"
     const val TELA_SERVICOS = "tela_servicos"
+    const val TELA_LISTA_AGENDAMENTOS = "tela_lista_agendamentos"  // Nova rota
 }
 
 @Composable
 fun BarberNavDrawer(viewModel: AgendamentoViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val navCtrlDrawer = rememberNavController()
+    val navController = rememberNavController()  // Usando uma única instância do NavController
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerContent(navCtrlDrawer, drawerState)
+            DrawerContent(navController, drawerState)  // Passando o navController para o Drawer
         },
         content = {
             NavHost(
-                navController = navCtrlDrawer,
+                navController = navController,  // Usando o mesmo NavController aqui
                 startDestination = BarberRotas.TELA_LOGIN
             ) {
                 composable(BarberRotas.TELA_LOGIN) {
@@ -69,10 +65,13 @@ fun BarberNavDrawer(viewModel: AgendamentoViewModel) {
                     TelaRegistro(drawerState)
                 }
                 composable(BarberRotas.TELA_AGENDAMENTO) {
-                    TelaDeAgendamento(drawerState, viewModel)
+                    TelaDeAgendamento(drawerState, viewModel = viewModel, navController)
                 }
                 composable(BarberRotas.TELA_SERVICOS) {
                     TelaServicos(drawerState)
+                }
+                composable(BarberRotas.TELA_LISTA_AGENDAMENTOS) {
+                    TelaListaAgendamentos(drawerState, viewModel = viewModel, navController)  // Nova tela
                 }
             }
         }
@@ -92,15 +91,14 @@ private fun DrawerContent(
     val ehCadastro = rotaAtual == BarberRotas.TELA_CADASTRO
     val ehAgendamento = rotaAtual == BarberRotas.TELA_AGENDAMENTO
     val ehServicos = rotaAtual == BarberRotas.TELA_SERVICOS
+    val ehListaAgendamentos = rotaAtual == BarberRotas.TELA_LISTA_AGENDAMENTOS
 
     Column(
         modifier = Modifier
-//            .width(300.dp)
             .background(Color(0xFF070918))
-//            .padding(30.dp)
             .fillMaxHeight()
     ) {
-        Spacer(modifier = Modifier.height(70.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         TextButton(
             colors = ButtonDefaults.buttonColors(containerColor = getColorMenu(ehLogin)),
@@ -114,7 +112,7 @@ private fun DrawerContent(
                 modifier = Modifier.size(30.dp),
                 tint = getColorTexto(ehLogin)
             )
-            Text(text = "Login", fontSize = 30.sp, color = getColorTexto(ehLogin))
+            Text(text = "Login", fontSize = 20.sp, color = getColorTexto(ehLogin))
         }
 
         TextButton(
@@ -129,7 +127,7 @@ private fun DrawerContent(
                 modifier = Modifier.size(40.dp),
                 tint = getColorTexto(ehCadastro)
             )
-            Text(text = "Cadastro", fontSize = 30.sp, color = getColorTexto(ehCadastro))
+            Text(text = "Cadastro", fontSize = 20.sp, color = getColorTexto(ehCadastro))
         }
 
         TextButton(
@@ -144,7 +142,22 @@ private fun DrawerContent(
                 modifier = Modifier.size(40.dp),
                 tint = getColorTexto(ehAgendamento)
             )
-            Text(text = "Agendamento", fontSize = 30.sp, color = getColorTexto(ehAgendamento))
+            Text(text = "Agendamento", fontSize = 20.sp, color = getColorTexto(ehAgendamento))
+        }
+
+        TextButton(
+            colors = ButtonDefaults.buttonColors(containerColor = getColorMenu(ehListaAgendamentos)),
+            onClick = {
+                navController.navigate(BarberRotas.TELA_LISTA_AGENDAMENTOS)
+                coroutineScope.launch { drawerState.close() }
+            }) {
+            Icon(
+                painter = painterResource(id = android.R.drawable.ic_menu_recent_history),
+                contentDescription = "Lista de Agendamentos",
+                modifier = Modifier.size(40.dp),
+                tint = getColorTexto(ehListaAgendamentos)
+            )
+            Text(text = "Lista de Agendamentos", fontSize = 20.sp, color = getColorTexto(ehListaAgendamentos))
         }
 
         TextButton(
@@ -159,7 +172,7 @@ private fun DrawerContent(
                 modifier = Modifier.size(40.dp),
                 tint = getColorTexto(ehServicos)
             )
-            Text(text = "Serviços", fontSize = 30.sp, color = getColorTexto(ehServicos))
+            Text(text = "Serviços", fontSize = 20.sp, color = getColorTexto(ehServicos))
         }
     }
 }

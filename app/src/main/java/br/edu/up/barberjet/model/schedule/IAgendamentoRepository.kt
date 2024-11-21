@@ -7,4 +7,5 @@ interface IAgendamentoRepository {
     suspend fun buscarAgendamentoId(idx: Int): Agendamento?
     suspend fun gravarAgendamento(agendamento: Agendamento)
     suspend fun excluirAgendamento(agendamento: Agendamento)
+    suspend fun editarAgendamento(agendamento: Agendamento)
 }

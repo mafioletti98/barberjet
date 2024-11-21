@@ -2,7 +2,6 @@ package br.edu.up.barberjet.ui.theme.screens.login
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -22,13 +21,14 @@ import br.edu.up.barberjet.ui.theme.themes.DarkGrey
 import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel) {
+fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel, navController: NavController) {
     val context = LocalContext.current
 
     var selectedDate by remember { mutableStateOf("Selecione a Data") }
     var selectedTime by remember { mutableStateOf("Selecione o Horário") }
+    var fullName by remember { mutableStateOf("") } // Para o nome completo
+    var email by remember { mutableStateOf("") } // Para o email
 
     val calendar = Calendar.getInstance()
 
@@ -52,6 +52,23 @@ fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel)
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
+                OutlinedTextField(
+                    value = fullName,
+                    onValueChange = { fullName = it },
+                    label = { Text("Nome Completo") },
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    singleLine = true
+                )
+
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    singleLine = true
+                )
+
+                // Botão de Seleção de Data
                 Box(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
                     Button(
                         onClick = {
@@ -71,6 +88,7 @@ fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel)
                     }
                 }
 
+                // Botão de Seleção de Horário
                 Box(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
                     Button(
                         onClick = {
@@ -102,9 +120,12 @@ fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel)
                                 val agendamento = Agendamento()
                                 agendamento.date = selectedDate
                                 agendamento.horaMin = selectedTime
+                                agendamento.nomeCompleto = fullName
+                                agendamento.email = email
 
                                 viewModel.gravar(agendamento)
 
+                                navController.navigate(LoginRotas.TELA_LISTA_AGENDAMENTOS_ROUTE)
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = Amarelo)
                         ) {
@@ -114,7 +135,7 @@ fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel)
 
                     Box(modifier = Modifier.weight(1f).padding(8.dp)) {
                         Button(
-                            onClick = {  },
+                            onClick = { },
                             colors = ButtonDefaults.buttonColors(containerColor = Amarelo)
                         ) {
                             Text(text = "Cancelar", color = Color.Black)

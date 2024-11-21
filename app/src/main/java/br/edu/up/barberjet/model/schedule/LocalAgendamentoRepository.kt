@@ -22,4 +22,7 @@ class LocalAgendamentoRepository(
         dao.excluirAgendamento(agendamento)
     }
 
+    override suspend fun editarAgendamento(agendamento: Agendamento) {
+        dao.editarAgendamento(agendamento)
+    }
 }

@@ -58,4 +58,26 @@ class RemoteAgendamentoRepository() : IAgendamentoRepository {
     override suspend fun excluirAgendamento(agendamento: Agendamento) {
         agendamentoCollection.document(agendamento.id.toString()).delete().await()
     }
+
+    override suspend fun editarAgendamento(agendamento: Agendamento) {
+        if (agendamento.id != null) {
+            val documentRef = agendamentoCollection.document(agendamento.id.toString())
+
+            val documentoExistente = documentRef.get().await()
+
+            if (documentoExistente.exists()) {
+                val agendamentoMap = hashMapOf<String, Any>(
+                    "horaMin" to agendamento.horaMin,
+                    "date" to agendamento.date
+                )
+
+                // Realiza a atualização no Firestore
+                documentRef.update(agendamentoMap).await()
+            } else {
+                throw Exception("Agendamento não encontrado para o ID: ${agendamento.id}")
+            }
+        } else {
+            throw Exception("O agendamento não possui um ID válido")
+        }
+    }
 }

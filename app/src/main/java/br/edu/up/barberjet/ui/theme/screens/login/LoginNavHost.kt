@@ -13,12 +13,14 @@ object LoginRotas {
     const val TELA_REGISTRO_ROUTE = "registro"
     const val TELA_AGENDAMENTO_ROUTE = "agendamento"
     const val TELA_SERVICOS_ROUTE = "servicos"
+    const val TELA_LISTA_AGENDAMENTOS_ROUTE = "listagem"
 
 }
 
 @Composable
 fun LoginNavHost(drawerState: DrawerState, viewModel: AgendamentoViewModel) {
-    val navCtrlBottomNav = rememberNavController()
+    val navCtrlBottomNav = rememberNavController()  // Controlador de navegação
+
     NavHost(
         navController = navCtrlBottomNav,
         startDestination = LoginRotas.TELA_LOGIN_ROUTE
@@ -30,10 +32,10 @@ fun LoginNavHost(drawerState: DrawerState, viewModel: AgendamentoViewModel) {
             TelaRegistro(drawerState = drawerState)
         }
         composable(LoginRotas.TELA_AGENDAMENTO_ROUTE) {
-            TelaDeAgendamento(drawerState = drawerState,  viewModel)
+            TelaDeAgendamento(drawerState = drawerState, viewModel = viewModel, navController = navCtrlBottomNav)  // Tela de Agendamento
         }
-        composable(LoginRotas.TELA_SERVICOS_ROUTE) {
-            TelaServicos(drawerState = drawerState)
+        composable(LoginRotas.TELA_LISTA_AGENDAMENTOS_ROUTE) {
+            TelaListaAgendamentos(drawerState = drawerState, viewModel = viewModel, navController = navCtrlBottomNav)  // Tela de Listagem de Agendamentos
         }
     }
 }

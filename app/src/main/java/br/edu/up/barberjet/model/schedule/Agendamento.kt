@@ -8,8 +8,10 @@ import androidx.room.PrimaryKey
 data class Agendamento(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
+    var nomeCompleto: String,
+    var email: String,
     var date: String,
     var horaMin: String,
 ){
-    constructor() : this(null, "", "")
+    constructor() : this(null, "", "","","")
 }
