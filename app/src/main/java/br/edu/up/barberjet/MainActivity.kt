@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // Método para verificar conexão
+    // Metodo para verificar conexão
     private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
