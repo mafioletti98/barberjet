@@ -1,11 +1,14 @@
 package br.edu.up.barberjet
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -19,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -106,14 +110,15 @@ private fun DrawerContent(
                 navController.navigate(BarberRotas.TELA_LOGIN)
                 coroutineScope.launch { drawerState.close() }
             }) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_login),
+            Image(
+                imageVector = Icons.Default.Person, // Substitua pelo ImageVector que deseja usar
                 contentDescription = "Login",
                 modifier = Modifier.size(30.dp),
-                tint = getColorTexto(ehLogin)
+                colorFilter = ColorFilter.tint(getColorTexto(ehLogin)) // Define a cor do ícone
             )
             Text(text = "Login", fontSize = 20.sp, color = getColorTexto(ehLogin))
         }
+
 
         TextButton(
             colors = ButtonDefaults.buttonColors(containerColor = getColorMenu(ehCadastro)),

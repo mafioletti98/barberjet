@@ -16,9 +16,11 @@ import br.edu.up.barberjet.model.schedule.Agendamento
 import br.edu.up.barberjet.ui.theme.themes.Amarelo
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.text.TextStyle
 import androidx.navigation.NavController
 import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelaListaAgendamentos(drawerState: DrawerState, viewModel: AgendamentoViewModel, navController: NavController) {
     val agendamentos by viewModel.agendamentos.collectAsState()
@@ -34,33 +36,48 @@ fun TelaListaAgendamentos(drawerState: DrawerState, viewModel: AgendamentoViewMo
             .background(Color.Black)
             .padding(16.dp)
     ) {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(8.dp)
         ) {
             OutlinedTextField(
                 value = nomeCompleto,
                 onValueChange = { nomeCompleto = it },
-                placeholder = { Text("Nome Completo") },
-                modifier = Modifier.weight(1f).padding(end = 8.dp),
-                singleLine = true
+                placeholder = {
+                    Text("Nome Completo", color = Color.Gray)
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterStart) // Alinha o campo no lado esquerdo
+                    .fillMaxWidth(0.85f)
+                    .height(56.dp), // Altura fixa
+                singleLine = true,
+                textStyle = TextStyle(color = Color.White),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    cursorColor = Color.Yellow,
+                    focusedBorderColor = Color.Yellow,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
+
             Button(
                 onClick = {
                     viewModel.buscarPorNomeCompleto(nomeCompleto)
                 },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd) // Alinha o botão no lado direito
+                    .height(56.dp) // Altura fixa para alinhar com o campo
+                    .width(115.dp), // Largura consistente
                 colors = ButtonDefaults.buttonColors(containerColor = Amarelo)
             ) {
                 Text(text = "Buscar", color = Color.Black)
             }
         }
 
+
         Text(
             text = "Agendamentos",
-            fontSize = 32.sp,
+            fontSize = 27.sp,
             color = Amarelo,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -108,7 +125,7 @@ fun TelaListaAgendamentos(drawerState: DrawerState, viewModel: AgendamentoViewMo
                 .padding(16.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Amarelo)
         ) {
-            Text(text = "Voltar para Agendamentos", color = Color.Black)
+            Text(text = "Voltar para Tela Anterior", color = Color.Black)
         }
     }
 }
@@ -168,7 +185,7 @@ fun ConfirmDeleteDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = "Confirmar Exclusão") },
         text = {
-            Text(text = "Você tem certeza que deseja excluir o agendamento${agendamento.nomeCompleto}?")
+            Text(text = "Você tem certeza que deseja excluir o agendamento de ${agendamento.nomeCompleto}?")
         },
         confirmButton = {
             Button(onClick = onConfirm) {

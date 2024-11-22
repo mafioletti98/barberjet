@@ -9,18 +9,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.edu.up.barberjet.ui.theme.screens.BarberTopBar
-import br.edu.up.barberjet.ui.theme.themes.Amarelo
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import br.edu.up.barberjet.model.schedule.Agendamento
-import br.edu.up.barberjet.ui.theme.themes.DarkGrey
+import br.edu.up.barberjet.ui.theme.screens.BarberTopBar
+import br.edu.up.barberjet.ui.theme.themes.Amarelo
 import br.edu.up.barberjet.ui.theme.viewModel.AgendamentoViewModel
 import java.util.*
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel, navController: NavController) {
     val context = LocalContext.current
@@ -56,17 +58,39 @@ fun TelaDeAgendamento(drawerState: DrawerState, viewModel: AgendamentoViewModel,
                     value = fullName,
                     onValueChange = { fullName = it },
                     label = { Text("Nome Completo") },
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    singleLine = true
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    singleLine = true,
+                    textStyle = TextStyle(color = Color.White), // Define a cor do texto
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        cursorColor = Amarelo, // Cor do cursor
+                        focusedBorderColor = Amarelo, // Cor da borda quando o campo está em foco
+                        unfocusedBorderColor = Color.Gray, // Cor da borda quando não está em foco
+                        focusedLabelColor = Amarelo, // Cor do rótulo quando o campo está em foco
+                        unfocusedLabelColor = Color.Gray // Cor do rótulo quando não está em foco
+                    )
                 )
 
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email") },
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    singleLine = true
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    singleLine = true,
+                    textStyle = TextStyle(color = Color.White), // Define a cor do texto
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        cursorColor = Amarelo,
+                        focusedBorderColor = Amarelo,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Amarelo,
+                        unfocusedLabelColor = Color.Gray
+                    )
                 )
+
+
 
                 // Botão de Seleção de Data
                 Box(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
